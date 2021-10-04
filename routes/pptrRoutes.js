@@ -23,7 +23,10 @@ router.get("/scrape", async (req, res) => {
     const browserPage = await browser.newPage();
     let startTime = Date.now();
     console.log("NAVIGATING PAGE");
-    await browserPage.goto(url, { timeout: 90 * 1000 });
+    await browserPage.goto(url, {
+      timeout: 90 * 1000,
+      waitUntil: "networkidle2",
+    });
     console.log("NAVIGATION COMPLETE: ", Date.now() - startTime);
 
     const result = await quizletScrape(browserPage, target);
