@@ -8,6 +8,9 @@ router.get("/scrape", async (req, res) => {
   console.log("backend reached...");
   const { url, target } = req.query;
 
+  const userAgent =
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36";
+
   try {
     const browser = await puppeteer.launch({
       headless: true,
@@ -21,6 +24,9 @@ router.get("/scrape", async (req, res) => {
     });
     console.log("CREATING PAGE");
     const browserPage = await browser.newPage();
+
+    browserPage.setUserAgent(userAgent);
+
     let startTime = Date.now();
     console.log("NAVIGATING PAGE");
     await browserPage.goto(url, {
@@ -31,7 +37,7 @@ router.get("/scrape", async (req, res) => {
 
     console.log("TARGET: ", target);
     const text = await browserPage.evaluate(() => document.body.innerText);
-    console.log('text: ', text);
+    console.log("text: ", text);
 
     const result = await quizletScrape(browserPage, target);
     await browser.close();
