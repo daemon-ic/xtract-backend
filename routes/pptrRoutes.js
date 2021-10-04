@@ -16,6 +16,7 @@ router.get("/scrape", async (req, res) => {
         "--disable-web-security",
         "--disable-features=IsolateOrigins",
         " --disable-site-isolation-trials",
+        "--no-sandbox",
       ],
     });
     console.log("CREATING PAGE");
