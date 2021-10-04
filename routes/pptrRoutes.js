@@ -9,7 +9,15 @@ router.get("/scrape", async (req, res) => {
   const { url, target } = req.query;
 
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: headless,
+      devtools: true,
+      args: [
+        "--disable-web-security",
+        "--disable-features=IsolateOrigins",
+        " --disable-site-isolation-trials",
+      ],
+    });
     const browserPage = await browser.newPage();
     await browserPage.goto(url);
 
