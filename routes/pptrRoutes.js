@@ -29,6 +29,10 @@ router.get("/scrape", async (req, res) => {
     });
     console.log("NAVIGATION COMPLETE: ", Date.now() - startTime);
 
+    console.log("TARGET: ", target);
+    const text = await browserPage.evaluate(() => document.body.innerText);
+    console.log('text: ', text);
+
     const result = await quizletScrape(browserPage, target);
     await browser.close();
     console.log("puppeteer retrieval success! ✅ ");
