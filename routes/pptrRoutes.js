@@ -10,7 +10,7 @@ router.get("/scrape", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      headless: headless,
+      headless: true,
       devtools: true,
       args: [
         "--disable-web-security",
@@ -18,8 +18,12 @@ router.get("/scrape", async (req, res) => {
         " --disable-site-isolation-trials",
       ],
     });
+    console.log("CREATING PAGE");
     const browserPage = await browser.newPage();
-    await browserPage.goto(url);
+    let startTime = Date.now();
+    console.log("NAVIGATING PAGE");
+    await browserPage.goto(url, { timeout: 90 * 1000 });
+    console.log("NAVIGATION COMPLETE: ", Date.now() - startTime);
 
     const result = await quizletScrape(browserPage, target);
     await browser.close();
