@@ -33,6 +33,9 @@ function uploadFileToStorage(file, fileName) {
     const writeStream = fileStorage.createWriteStream({
       public: true,
       predefinedAcl: "publicRead",
+      metadata: {
+        cacheControl: "public,max-age=0",
+      },
     });
 
     file
@@ -55,9 +58,10 @@ async function zipBase64Images(images, imageUrls) {
     const url = imageUrls[i];
 
     let extension = get_url_extension(url);
-    if (!extension) {
+    if (!extension || extension.length > 5 || extension.includes("/")) {
       extension = "png";
     }
+    console.log(extension);
 
     zip.file("image" + i + "." + extension, images[i], { base64: true });
   }
