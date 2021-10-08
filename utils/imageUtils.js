@@ -5,9 +5,15 @@ const { Storage } = require("@google-cloud/storage");
 // HOW TO DOWNLOAD FILE
 // https://firebasestorage.googleapis.com/v0/b/xtract-bf4dd.appspot.com/o/FILENAME?alt=media
 
+function getPath() {
+  const path = __dirname.split("/");
+  path.splice(path.length - 1, 1);
+  return path.join("/");
+}
+
 const storage = new Storage({
   projectId: "xtract-bf4dd",
-  keyFilename: "../backend/service-account-key.json",
+  keyFilename: getPath() + "/service-account-key.json",
 });
 const bucket = storage.bucket("gs://xtract-bf4dd.appspot.com/");
 
