@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 const cors = require("cors");
-
+a
 require("dotenv").config();
 
 mongoose
@@ -21,7 +21,7 @@ app.use(cors());
 app.options("*", cors());
 
 app.use("/user", require("./routes/userRoutes"));
-app.use("/pptr", require("./routes/pptrRoutes"));
+app.use("/pptr", require("./routes/pptrRoutes"));e
 
 app.listen(process.env.PORT, () => {
   console.log("Server is Running... ✅");

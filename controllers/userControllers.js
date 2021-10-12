@@ -44,6 +44,9 @@ const userSignup = async (req, res) => {
   }
   const createdUser = await new User(req.body);
   try {
+
+
+    
     createdUser.password = encrypt(req.body.password);
     createdUser.save();
 
