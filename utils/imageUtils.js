@@ -61,8 +61,6 @@ async function zipBase64Images(images, imageUrls) {
     if (!extension || extension.length > 5 || extension.includes("/")) {
       extension = "png";
     }
-    // TODO MAKE THIS DYNAMIC IF IMAGE OR VIDEO
-    // extension = "mp4";
     console.log(extension);
 
     zip.file("image" + i + "." + extension, images[i], { base64: true });
@@ -74,9 +72,6 @@ async function zipBase64Images(images, imageUrls) {
 async function downloadImageAsBase64(url) {
   try {
     const response = await axios.get(url, {
-      headers: {
-        referer: "https://www.tiktok.com/",
-      },
       responseType: "arraybuffer",
     });
     const base64 = response.data.toString("base64");

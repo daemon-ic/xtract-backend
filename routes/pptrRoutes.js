@@ -143,16 +143,13 @@ const quizletScrape = async (page, targetBeingPassed) => {
     const cleanData = {};
     const cleanArray = [];
 
-    // TODO PASS VIDEO HERE
-
-    if (passedTarget === "img" || passedTarget == "video") {
+    if (passedTarget === "img") {
       console.log("I AM AN IMAGE");
       const scrapedImages = document.getElementsByTagName(`${passedTarget}`);
-      // const scrapedImages = document.getElementsByTagName(`video`);
       const images = [...scrapedImages];
       for (var i = 0; i < images.length; i++) {
         cleanArray.push(images[i].src);
-        cleanData[passedTarget === "img" ? "images" : "videos"] = cleanArray;
+        cleanData["images"] = cleanArray;
       }
     } else {
       const scrapedArray = document.querySelectorAll(`${passedTarget}`);
