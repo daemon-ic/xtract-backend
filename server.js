@@ -17,8 +17,8 @@ mongoose
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
-app.options("*", cors());
+app.use(cors({ origin: "*" }));
+// app.options("*", cors());
 
 app.use("/user", require("./routes/userRoutes"));
 app.use("/pptr", require("./routes/pptrRoutes"));
