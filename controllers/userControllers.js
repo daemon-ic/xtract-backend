@@ -11,7 +11,7 @@ const getUsers = async (req, res) => {
   try {
     return res.json(allUsers);
   } catch (error) {
-    return res.json({ error: "Couldn't get users." });
+    return res.json({ error: "NO_USERS" });
   }
 };
 
@@ -21,7 +21,7 @@ const getUser = async (req, res) => {
   try {
     return res.json(user);
   } catch (error) {
-    return res.json({ error: "Couldn't get user." });
+    return res.json({ error: "NO_USER" });
   }
 };
 
@@ -31,7 +31,7 @@ const updateUser = async (req, res) => {
   try {
     return res.json(user);
   } catch (error) {
-    return res.json({ error: "Error updating user." });
+    return res.json({ error: "CANNOT_UPDATE" });
   }
 };
 
@@ -40,7 +40,7 @@ const updateUser = async (req, res) => {
 const userSignup = async (req, res) => {
   const emailAlreadyExists = await User.findOne({ email: req.body.email });
   if (emailAlreadyExists) {
-    return res.json({ error: "Email already used, try again." });
+    return res.json({ error: "EMAIL_IN_USE" });
   }
   const createdUser = await new User(req.body);
   try {
@@ -51,7 +51,7 @@ const userSignup = async (req, res) => {
     const { _id } = createdUser;
     return res.json({ token, _id });
   } catch (error) {
-    return res.json({ error: "Couldn't create user." });
+    return res.json({ error: "CANT_CREATE_USER" });
   }
 };
 
@@ -59,11 +59,10 @@ const userLogin = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
-  if (!user)
-    return res.json({ error: "User not found, try a different email." });
+  if (!user) return res.json({ error: "USER_DOES_NOT_EXIST" });
 
   if (!isValidPassword(password, user.password))
-    return res.json({ error: "Incorrect password, please try again." });
+    return res.json({ error: "INCORRECT_PASSWORD" });
 
   const token = await generateJwt(user._id);
   const { _id } = user;
